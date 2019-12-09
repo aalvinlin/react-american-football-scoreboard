@@ -37,135 +37,102 @@ function App() {
 
       <section className="buttons">
         <div className="homeButtons">
-        <h3>Add Points for Home Team</h3>
-          {/* TODO STEP 4 - Now we need to attach our state setter functions to click listeners. */}
-          <button className="homeButtons__touchdown" onClick={() => {
-              
-              setScoreHistory(scoreHistory.concat([["home", 6, "touchdown"]]));
-              setHomeScore(homeScore + 6); setMessage("The home team scored a touchdown!");
-              setMessagesBackground("homeBg");
-              
-              }}>Touchdown</button>
-
-          <button className="homeButtons__touchdown" onClick={() => {
-            setScoreHistory(scoreHistory.concat([["home", 1, "one-point conversion"]]));
-            setHomeScore(homeScore + 1); setMessage("The home team scored a one-point conversion!");
-            setMessagesBackground("homeBg");
-
-            }}>One-point conversion</button>
-
-          <button className="homeButtons__touchdown" onClick={() => {
-            setScoreHistory(scoreHistory.concat([["home", 2, "two-point conversion"]]));
-            setHomeScore(homeScore + 2); setMessage("The home team scored a two-point conversion!");
-            setMessagesBackground("homeBg");
-
-            }}>Two-point conversion</button>
-
-          <button className="homeButtons__fieldGoal" onClick={() => {
-            setScoreHistory(scoreHistory.concat([["home", 3, "field goal"]]));
-            setHomeScore(homeScore + 3); setMessage("The home team scored a field goal!");
-            setMessagesBackground("homeBg");
-
-            }}>Field Goal</button>
-
-          <button className="homeButtons__fieldGoal" onClick={() => {
-            setScoreHistory(scoreHistory.concat([["home", 2, "safety"]]));
-            setHomeScore(homeScore + 2); setMessage("The home team was awarded 2 points for a safety.");
-            setMessagesBackground("homeBg");
-
-            }}>Safety</button>
-
+          <h3>Add Points for Home Team</h3>
+          <button className="homeButtons__button" onClick={() => { updateScoreboard("home", "touchdown"); }}>Touchdown</button>
+          <button className="homeButtons__button" onClick={() => { updateScoreboard("home", "one-point conversion"); }}>1-point Conversion</button>
+          <button className="homeButtons__button" onClick={() => { updateScoreboard("home", "two-point conversion"); }}>2-point Conversion</button>
+          <button className="homeButtons__button" onClick={() => { updateScoreboard("home", "field goal")}}>Field Goal</button>
+          <button className="homeButtons__button" onClick={() => { updateScoreboard("home", "safety"); }}>Safety</button>
         </div>
         
         <div className="undoResetButtons">
         <h3>Controls</h3>
-          <button className="undo" onClick={() => {
-
-              if (scoreHistory.length > 0)
-              {
-                let [lastTeam, lastScore, lastMoveType] = scoreHistory.pop();
-                
-                // subtract points from current score
-                if (lastTeam === "home")
-                  { setHomeScore(homeScore - lastScore); }
-                else
-                  { setAwayScore(awayScore - lastScore); }
-
-                setScoreHistory(scoreHistory);
-
-                // update CSS background
-                setMessagesBackground(lastTeam + "Bg");
-
-                // add "s" if more than one point
-                let pointsText = "point";
-                if (lastScore > 1)
-                  { pointsText += "s"; }
-
-                setMessage(`Undo successful: Removed ${lastScore} ${pointsText} (${lastMoveType}) from the ${lastTeam} team.`);
-              }
-              else
-              {
-                setMessage(`No moves left to undo. Score is already 0-0.`);
-                setMessagesBackground("defaultBg");
-              }
-
-              }}>Undo</button>
-          <button className="reset" onClick={() => {
-              setScoreHistory([]); setHomeScore(0); setAwayScore(0);
-              
-              setMessage(`Reset scores to 0-0.`);
-              setMessagesBackground("defaultBg");
-
-              }}>Reset</button>
+          <button className="undo" onClick={ () => undo() }>Undo</button>
+          <button className="reset" onClick={() => reset() }>Reset</button>
         </div>
         
         <div className="awayButtons">
           <h3>Add Points for Away Team</h3>
-          <button className="awayButtons__touchdown" onClick={() => {
-            
-            setScoreHistory(scoreHistory.concat([["away", 6, "touchdown"]]));
-            setAwayScore(awayScore + 6); setMessage("The away team scored a touchdown!");
-            setMessagesBackground("awayBg")
-            
-            }}>Touchdown</button>
-
-          <button className="awayButtons__touchdown" onClick={() => {
-            setScoreHistory(scoreHistory.concat([["away", 1, "one-point conversion"]]));
-            setAwayScore(awayScore + 1);
-            setMessage("The away team scored a one-point conversion!");
-            setMessagesBackground("awayBg")
-            
-            }}>One-point conversion</button>
-
-          <button className="awayButtons__touchdown" onClick={() => {
-            setScoreHistory(scoreHistory.concat([["away", 2, "two-point conversion"]]));
-            setAwayScore(awayScore + 2);
-            setMessage("The away team scored a two-point conversion!");
-            setMessagesBackground("awayBg")
-            
-            }}>Two-point conversion</button>
-
-          <button className="awayButtons__fieldGoal" onClick={() => {
-            setScoreHistory(scoreHistory.concat([["away", 3, "field goal"]]));
-            setAwayScore(awayScore + 3);
-            setMessage("The away team scored a field goal!");
-            setMessagesBackground("awayBg")
-            
-            }}>Field Goal</button>
-
-          <button className="awayButtons__fieldGoal" onClick={() => {
-            setScoreHistory(scoreHistory.concat([["away", 2, "safety"]]));
-            setAwayScore(awayScore + 2);
-            setMessage("The away team was awarded 2 points for a safety.");
-            setMessagesBackground("awayBg")
-            
-            }}>Safety</button>
+          <button className="awayButtons__button" onClick={() => { updateScoreboard("away", "touchdown"); }}>Touchdown</button>
+          <button className="awayButtons__button" onClick={() => { updateScoreboard("away", "one-point conversion"); }}>1-point Conversion</button>
+          <button className="awayButtons__button" onClick={() => { updateScoreboard("away", "two-point conversion"); }}>2-point Conversion</button>
+          <button className="awayButtons__button" onClick={() => { updateScoreboard("away", "field goal")}}>Field Goal</button>
+          <button className="awayButtons__button" onClick={() => { updateScoreboard("away", "safety"); }}>Safety</button>
         </div>
 
-       
       </section>
     </div>
   );
+
+  function updateScoreboard(team, scoreType)
+    {
+      let scoreTypes = {"touchdown": 6, "one-point conversion": 1, "two-point conversion": 2, "field goal": 3, "safety": 2};
+      let pointsToAdd = scoreTypes[scoreType];
+
+      // update score
+      if (team === "away")
+        { setAwayScore(awayScore + pointsToAdd); }
+      else
+        { setHomeScore(homeScore + pointsToAdd); }
+
+      // add move to history of moves
+      setScoreHistory(scoreHistory.concat([[team, pointsToAdd, scoreType]]));
+      
+      // update message status
+      if (scoreType === "safety")
+        { setMessage(`The ${team} team was awarded ${pointsToAdd} points for a ${scoreType}.`); }
+      else
+        { setMessage(`The ${team} team scored a ${scoreType}!`); }
+      
+      // change message background to team color
+      setMessagesBackground(team + "Bg");
+
+      return null;
+    }
+
+  function undo() {
+    if (scoreHistory.length > 0)
+    {
+      let [lastTeam, lastScore, lastMoveType] = scoreHistory.pop();
+      
+      // subtract points from current score
+      if (lastTeam === "home")
+        { setHomeScore(homeScore - lastScore); }
+      else
+        { setAwayScore(awayScore - lastScore); }
+
+      setScoreHistory(scoreHistory);
+
+      // update CSS background
+      setMessagesBackground(lastTeam + "Bg");
+
+      // add "s" if more than one point
+      let pointsText = "point";
+      if (lastScore > 1)
+        { pointsText += "s"; }
+
+      setMessage(`Undo successful: Removed ${lastScore} ${pointsText} (${lastMoveType}) from the ${lastTeam} team.`);
+    }
+    else
+    {
+      setMessage(`No moves left to undo. Score is already 0-0.`);
+      setMessagesBackground("defaultBg");
+    }
+
+  }
+
+  function reset() {
+    
+    setScoreHistory([]); setHomeScore(0); setAwayScore(0);
+              
+    setMessage(`Reset scores to 0-0.`);
+    setMessagesBackground("defaultBg");
+
+    
+  }
+  
 }
+
+
 
 export default App;

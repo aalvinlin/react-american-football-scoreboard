@@ -161,10 +161,8 @@
   justify-content: space-around;
 }
 
-.homeButtons__touchdown,
-.homeButtons__fieldGoal,
-.awayButtons__touchdown,
-.awayButtons__fieldGoal{
+.awayButtons__button,
+.homeButtons__button{
   margin: 1rem;
   border-radius: 4px;
 }
