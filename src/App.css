@@ -5,11 +5,10 @@
 
 .scoreboard {
   width: 58%;
-  margin: 10rem auto;
+  margin: 5rem auto 0rem;
   background-color: #0b5402;
   color: white;
   border-radius: 0.5rem;
-  margin-top: 10rem;
   padding: 5rem;
   border: 4px solid #aaaaaa;
 }
@@ -34,17 +33,18 @@
 }
 
 .home {
-  background-color: #656565;
+  background-color: #656565 !important;
 }
 
 .away {
-  background-color: #af750a;
+  background-color: #af750a !important;
 }
 
 .home__name,
 .away__name,
 .down__title,
 .toGo__title,
+.possession__title,
 .ballOn__title,
 .quarter__title {
   text-transform: uppercase;
@@ -82,16 +82,19 @@
 
 .down,
 .toGo,
+.possession,
 .ballOn,
 .quarter {
   display: flex;
   flex-direction: column;
   justify-content: space-around;
   place-items: center;
+  width: 20%;
 }
 
 .down__value,
 .toGo__value,
+.possession__value,
 .ballOn__value,
 .quarter__value {
   font-family: "Ozone";
@@ -106,17 +109,79 @@
   border: 1px solid white;
 }
 
+.possession__value {
+  width: 14rem;
+}
+
+/* CSS for message section */
+
+.messages {
+  
+  width: 58%;
+
+  margin: 1rem auto;
+  text-align: center;
+
+  border-radius: 5px;
+
+}
+
+.messages h3 {
+
+  color: white;
+
+  font-size: 2rem;
+  line-height: 4rem;
+}
+
+.defaultBg {
+  background-color: #0b5402;
+}
+
+.homeBg {
+  background-color: #656565;
+}
+
+.awayBg {
+  background-color: #af750a;
+}
+
+.errorBg {
+  background-color: #993333;
+}
+
+
+
+/* CSS for control buttons */
 .buttons {
   width: 50%;
   margin: 0 auto;
   display: flex;
+  
   justify-content: space-around;
 }
 
 .homeButtons__touchdown,
 .homeButtons__fieldGoal,
 .awayButtons__touchdown,
-.awayButtons__fieldGoal {
+.awayButtons__fieldGoal{
   margin: 1rem;
   border-radius: 4px;
+}
+
+.undoResetButtons, .homeButtons, .awayButtons{
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+
+  text-align: center;
+}
+
+.reset, .undo {
+  border-radius: 4px;
+
+  display: flex;
+  align-items: center;
+
+  margin: 1rem;
 }

@@ -12,6 +12,10 @@ const BottomRow = () => {
         <h3 className="toGo__title">To Go</h3>
         <div className="toGo__value">7</div>
       </div>
+      <div className="possession">
+        <h3 className="possession__title">Possession</h3>
+        <div className="possession__value">Home</div>
+      </div>
       <div className="ballOn">
         <h3 className="ballOn__title">Ball on</h3>
         <div className="ballOn__value">21</div>
