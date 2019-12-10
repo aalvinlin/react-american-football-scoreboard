@@ -162,12 +162,13 @@
 }
 
 .awayButtons__button,
-.homeButtons__button{
+.homeButtons__button,
+.controlButtons__button{
   margin: 1rem;
   border-radius: 4px;
 }
 
-.undoResetButtons, .homeButtons, .awayButtons{
+.controlButtons, .homeButtons, .awayButtons{
   padding: 2rem;
   display: flex;
   flex-direction: column;
