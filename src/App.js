@@ -60,6 +60,16 @@ function App() {
           <button className="controlButtons__button" onClick={() => nextDown() }>+1 Down</button>
           <button className="controlButtons__button" onClick={() => changePossession() }>Change Possession</button>
           <button className="controlButtons__button" onClick={() => nextQuarter() }>+1 Quarter</button>
+          {/* <input className="yardsToGoInput" type="text" placeholder="Yards to Go"></input>
+          <input className="ballOnInput" type="text" placeholder="Line of Scrimmage"></input> */}
+          {/* <div className="inputDiv">
+            <input className="yardsToGoInput" type="text"></input>
+            <button className="controlButtons__button smallerButton" onClick={() => setYardsToGo() }>Set Yards to Go</button>
+          </div>
+          <div className="inputDiv">
+            <input className="ballOnInput" type="text"></input>
+            <button className="controlButtons__button smallerButton" onClick={() => setBallOn() }>Set Ball On</button>
+          </div> */}
         </div>
         
         <div className="awayButtons">
@@ -169,6 +179,12 @@ function App() {
   }
 
   function nextDown() {
+
+    // if (currentDown < 4)
+    // {
+    //   setCurrentDown(currentDown + 1);
+    // }
+    // setMessage(`Down ${currentDown} with ${yardsToGo} yards to go!`);
 
     if (currentDown < 4)
       {

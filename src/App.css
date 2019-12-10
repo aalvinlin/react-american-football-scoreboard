@@ -184,3 +184,25 @@
 
   margin: 1rem;
 }
+
+.inputDiv {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.yardsToGoInput, .ballOnInput {
+
+  font-size: 2rem;
+  height: 3rem;
+  text-align: center;
+
+  margin: 1rem;
+
+  border-radius: 5px;
+}
+
+.smallerButton {
+  width: 50%;
+}
